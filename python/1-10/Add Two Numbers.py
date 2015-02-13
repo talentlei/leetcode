@@ -35,4 +35,3 @@ class Solution:
             p.next=temp
             p=temp
         return head.next
-        
