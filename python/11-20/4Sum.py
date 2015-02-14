@@ -1,5 +1,6 @@
 class Solution:
     # @return a list of lists of length 4, [[val1,val2,val3,val4]]
+    #can solve in O(n^2lgn) but not this method
     def fourSum(self, num, target):
         size = len(num)
         result = []
