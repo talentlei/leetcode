@@ -29,7 +29,7 @@ public:
         vector<vector<int> > myVec(numCourses);
         for(size_t i=0; i<prerequisites.size(); i++){
             pair<int,int> p = prerequisites[i];
-            myVec[p.second].push_back(p.first);
+            myVec[p.first].push_back(p.second);
         }
 
         for(int i=0; i<numCourses; i++){
