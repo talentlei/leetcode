@@ -25,4 +25,13 @@ public:
         }
         return false;
     }
+    //method 3 O(n)time o(n)space
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        set<int > myset;
+        for(int i = 0; i < nums.size(); i++){
+            if(i > k) myset.erase(nums[i-k-1]);
+            if(!myset.insert(nums[i]).second) return true;
+        }
+        return false;
+    }
 };
