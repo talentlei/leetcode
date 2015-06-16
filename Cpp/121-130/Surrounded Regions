@@ -1,0 +1,121 @@
+class Solution {
+public:
+    bool checkSound(vector<vector<char>>& board,int i,int j,int row,int col){
+      board[i][j] = '1';
+      if(i>0){
+        if(board[i-1][j]=='2'||board[i-1][j]=='O'&& i-1==0)
+          return false;
+        if(board[i-1][j]=='O'&&!checkSound(board,i-1,j,row,col))
+          return false;
+      }
+      if(i<row-1){
+        if(board[i+1][j]=='2'||board[i+1][j]=='O'&& i+1==row-1)
+          return false;
+        if(board[i+1][j]=='O'&&!checkSound(board,i+1,j,row,col))
+          return false;
+      }
+      if(j>0){
+        if(board[i][j-1]=='2'||board[i][j-1]=='O'&& j-1==0)
+          return false;
+        if(board[i][j-1]=='O'&&!checkSound(board,i,j-1,row,col))
+          return false;
+      }
+      if(j<col-1){
+        if(board[i][j+1]=='2'||board[i][j+1]=='O'&& j+1==col-1)
+          return false;
+        if(board[i][j+1]=='O'&&!checkSound(board,i,j+1,row,col))
+          return false;
+      }
+      return true;
+    }
+    
+    void changeto(vector<vector<char>>& board,char a , char b){
+      for(int i=0; i<board.size(); i++){
+        for(int j=0; j<board[0].size();j++)
+          if(board[i][j]==a)
+            board[i][j] = b;
+      }
+      return;
+    }
+    void solve(vector<vector<char>>& board) {
+      if(board.size()<=2||board[0].size()<=2)
+        return;
+      int row = board.size();
+      int col = board[0].size();
+      
+      for(int i=1; i<row-1; i++){
+        for(int j=1; j<col-1; j++){
+          if(board[i][j]=='O'){
+            if(checkSound(board,i,j,row,col))
+              changeto(board,'1','X');
+            else changeto(board,'1','2');
+          }
+        }
+      }
+      changeto(board,'2','O');
+      return ;
+    }
+    
+    //mehod2
+        void Surround(vector<vector<char>> &board,int row,int col){
+        int rows = board.size();
+        int cols = board[0].size();
+        stack<int> myQueue;
+        
+        set<int> visited;
+        myQueue.push(row*cols+col);
+        visited.insert(row*cols+col);
+        while(!myQueue.empty()){
+            int pos = myQueue.top();
+            int trow = pos/cols;
+            int tcol = pos%cols;
+            board[trow][tcol] = '1';
+            myQueue.pop();
+            
+            if(tcol < cols-1 &&board[trow][tcol+1] == 'O' && visited.count(trow*cols+tcol+1)==0){
+                myQueue.push(trow*cols+tcol+1);
+                visited.insert(trow*cols+tcol+1);   
+            }
+            if(trow <rows-1 &&board[trow+1][tcol] == 'O' && visited.count((trow+1)*cols+tcol)==0){
+                myQueue.push((trow+1)*cols+tcol);
+                visited.insert((trow+1)*cols+tcol);   
+            }
+            if(tcol >0 &&board[trow][tcol-1] == 'O' && visited.count(trow*cols+tcol-1)==0){
+                myQueue.push(trow*cols+tcol-1);
+                visited.insert(trow*cols+tcol-1);   
+            }
+            if(trow >0 &&board[trow-1][tcol] == 'O' && visited.count((trow-1)*cols+tcol)==0){
+                myQueue.push((trow-1)*cols+tcol);
+                visited.insert((trow-1)*cols+tcol);   
+            }
+                
+        }
+    }
+    void solve(vector<vector<char>> &board) {
+        if(board.size() <=2||board[0].size() <=2)
+            return ;
+        int rows = board.size();
+        int cols = board[0].size();
+        for(int i = 0; i<cols; i++)
+            if(board[0][i] == 'O')
+                Surround(board,0,i);
+        for(int i = 0; i<cols; i++)
+            if(board[rows-1][i] == 'O')
+                Surround(board,rows-1,i);
+        for(int i = 0; i<rows; i++)
+            if(board[i][0] == 'O')
+                Surround(board,i,0);
+        for(int i = 0; i<rows; i++)
+            if(board[i][cols-1] == 'O')
+                Surround(board,i,cols-1);
+        
+        for(int i=0; i<rows; i++)
+            for(int j=0; j<cols; j++){
+                if(board[i][j] == '1')
+                    board[i][j] ='O';
+                else if(board[i][j] == 'O'){
+                    board[i][j] ='X';
+                }
+            }
+    }
+};
