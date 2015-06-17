@@ -3,19 +3,25 @@ public:
     //method 1  o(min(k,t)n)time o(1)oro(n) space
     bool k_min(vector<int>& nums, int k, int t){
           int len = nums.size();
+          long pi,pj,pt;
+          pt = t;
           for(int i=0; i<len; i++){
-            for(int j=i+1; j<=i+k&& j<len; j++)
-              if(abs(nums[i]-nums[j])<=t)
+            for(int j=i+1; j<=i+k&& j<len; j++){
+              pi = nums[i];
+              pj = nums[j];
+              if(abs(pi-pj)<=pt)
                 return true;
+            }
           }
           return false;
     }
-    bool t_min(vector<int>& nums, int k) {
+    bool t_min(vector<int>& nums, int k,int t) {
         set<int > myset;
         for(int i = 0; i < nums.size(); i++){
             if(i > k) myset.erase(nums[i-k-1]);
             for(int j=nums[i]-t; j<=nums[i]+t; j++)
-              if(myset.count(j)！=0) return true;
+              if(myset.count(j)!=0) return true;
+            myset.insert(nums[i]);
         }
         return false;
     }
