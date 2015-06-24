@@ -1,3 +1,7 @@
+/*
+    error: 1, Max,Min init;  i use "int Max[size-1]={-1}"; this make Max ={-1,0,0,0...} rather than {-1,-1,-1...}
+    runtime: 12ms
+*/
 class Solution {
 public:
     int maximumGap(vector<int>& nums) {
