@@ -6,6 +6,11 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+ 
+ /*
+    runtime :12ms
+    error:0
+ */
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
@@ -21,4 +26,25 @@ public:
         }
         return head;
     }
+    
+};
+
+/*
+    runtime: 8ms
+    error:0
+*/
+class Solution2 {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* thead = new ListNode(0);
+        ListNode* temp;
+        while(head!=NULL){
+            temp = head->next;
+            head->next = thead->next;
+            thead->next = head;
+            head = temp;
+        }
+        return thead->next;
+    }
+    
 };
