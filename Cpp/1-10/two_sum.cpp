@@ -13,14 +13,9 @@ public:
         for(int i=0; i<nums.size(); i++){
           iter = myMap.find(target-nums[i]);
           if(iter!=myMap.end()){
-            if(nums[i]>iter->first){
-              res[0] = i+1;
-              res[1] = iter->second;
-              }
-              else{
-                res[0]=iter->second;
-                res[1] = i+1;
-              }
+              if(i+1==iter->second)  continue;
+              res[0] = min(i+1,iter->second);
+              res[1] = max(i+1,iter->second);
               break;
           }
         }return res;
