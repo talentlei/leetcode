@@ -1,3 +1,8 @@
+/*
+    runtime: 40ms
+    error: 0
+
+*/
 class Solution {
 public:
     void solveSudoku(vector<vector<char>>& board) {
