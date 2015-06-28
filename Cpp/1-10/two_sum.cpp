@@ -1,6 +1,7 @@
 
 /**
-    
+    runtime : 20ms
+    error: 2   ind1!=ind2    
 */
 class Solution1 {
 public:
