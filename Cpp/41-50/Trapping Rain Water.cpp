@@ -1,30 +1,24 @@
+/**
+ * source: meng
+ * runtime : 8ms
+ * error: 0
+ * a very fancy method!! 
+ */ 
+
 class Solution {
 public:
-    int trap(vector<int>& height) {
-        vector<int> tops;
-        if(height.size()<=2) return 0;
-        height.push_back(0);
-        if(height[0]>height[1])
-            tops.push_back(0);
-        for(int i=0; i<hegiht.size()-1; i++){
-            if(height[i]>height[i+1]&&height[i]>height[i-1])
-                tops.push_back(i);
-        }
-        if(tops.size()<2) return 0;
-        for(int i=0; i<tops.size()-1; i++){
-            int pos = i+1;
-            for(int j=i+1; j<tops.size(); j++){
-                if(height[tops[j]]>=height[tops[i]]){
-                    pos=j;
-                    break;
-                }
-                if(hegiht[tops[j]]>height[tops[pos]])
-                    pos = j;
-            }int minval = min(height[tops[i]],height[tops[pos]]);
-            for(int p=tops[i]; p<tops[pos]; p++)
-                res+= minval>height[p]? minval-height[p]:0;
-            i=pos-1;
-        }
-        return res;
+    int trap(vector<int>& A) {
+    int n = A.size();
+    if (n == 0) return 0;
+    int ret = 0;
+    vector<int> lt(n, A[0]), rht(n, A[n-1]);
+    for (int i=1; i<n; i++) {
+      lt[i] = max(lt[i-1], A[i]);
+      rht[n-1-i] = max(rht[n-i], A[n-1-i]);
     }
+    for (int i=0; i<n; i++) {
+      ret += max(0, min(lt[i], rht[i])-A[i]);
+    }
+    return ret;
+  }
 };
