@@ -7,21 +7,40 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+ 
+ /**
+  * 
+  * runtime: 28ms
+  * error: 0
+  * 
+  */ 
 class BSTIterator {
 public:
     BSTIterator(TreeNode *root) {
-        
+        cur = root;    
     }
 
     /** @return whether we have a next smallest number */
     bool hasNext() {
-        
+        return (!myStack.empty()|| cur!=NULL);
     }
 
     /** @return the next smallest number */
     int next() {
-        
+        while(cur){
+            myStack.push(cur);
+            cur = cur->left;
+        }
+        cur=myStack.top();
+        myStack.pop();
+        int val = cur->val;
+        cur = cur->right;
+        return val;
     }
+private:
+    stack<TreeNode*> myStack;
+    TreeNode* cur;
+    
 };
 
 /**
