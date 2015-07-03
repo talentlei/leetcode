@@ -1,6 +1,13 @@
+/**
+ * runtime: 44ms
+ * error:3
+ * 
+ * 
+ */ 
+
 class Solution {
 public:
-    vector<int> findSubstring(string s, vector<string>& words) {
+   vector<int> findSubstring(string s, vector<string>& words) {
         vector<int > res;
         if(words.size()==0||s.size()==0)
             return res;
@@ -9,19 +16,20 @@ public:
         for(int i=0; i<words.size(); i++)
             wordsnum[words[i]]++;
         int len = words[0].size();
-        int num=0;
         for(int beg = 0; beg<len; beg++){
-            int i = beg;
-            int bpos;
-            for(;i<s.size(); i+=len){
+            int num=0, i = beg, bpos;
+            mySet.clear();                           // error 3: forget to clear mySet and num;
+            for(;i+len<=s.size(); i+=len){           //error 2 i+len<s.size();
                 string word = s.substr(i,len);
-                if(words.find(word)==words.end())
+                if(wordsnum.find(word)==wordsnum.end()){
                     mySet.clear();
+                    num=0;           //error 1: forget
+                }
                 else{
                     if(mySet.find(word)==mySet.end()){
                         if(mySet.size()==0)
                             bpos = i;       
-                        mySet.insert(word);
+                        mySet[word]++;
                         num++;
                     }
                     else if(mySet[word]<wordsnum[word]){
@@ -29,12 +37,18 @@ public:
                         mySet[word]++;
                     }else{
                         string bw; 
-                        while(bw = s.substr(bpos,len)!=word)
-                            bpos
+                        while((bw = s.substr(bpos,len))!=word){
+                            bpos+=len;
+                            mySet[bw]--;
+                            num--;
+                        }
+                        bpos+=len;
                     }
-                        
+                    if(num==words.size())
+                        res.push_back(bpos);
                 }
             }
         }
+        return res;
     }
 };
