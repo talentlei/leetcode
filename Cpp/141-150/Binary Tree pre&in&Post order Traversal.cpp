@@ -14,7 +14,8 @@ public:
       stack<TreeNode*> myStack;
       TreeNode* p = root;
       while(!myStack.empty()||p){
-      
+        while(p){
+        myStack.push()
       }
     }
     
