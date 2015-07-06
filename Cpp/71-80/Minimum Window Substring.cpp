@@ -1,8 +1,13 @@
-    string minWindow(string s, string t) {
+    /**
+     *  runtime: 132ms
+     *  error: too many
+     * 
+     */ 
+       string minWindow(string s, string t) {
         if(s.size()==0||t.size()==0) return "";
         unordered_map<char,int> myMap;
         unordered_map<char,int> temp;
-        foreach(auto ch: t)
+        for(auto ch: t)
             myMap[ch]++;
         string res="";
         int num = 0;
@@ -13,15 +18,21 @@
                 end++;
                 continue;
             }
-            if(temp[ch]+1==myMap[ch])
+            temp[ch]++;
+            if(temp[ch]==myMap[ch])
                 num++;
-            if(num==myMap.size()){
+            while(num==myMap.size()){
+                // if(res==""||res.size()>end-beg+1)
+                //     res = s.substr(beg,end-beg+1);
+                if(myMap.find(s[beg])!=myMap.end()){
+                    if(temp[s[beg]]==myMap[s[beg]])
+                        num--;
+                    temp[s[beg]]--;
+                }
                 if(res==""||res.size()>end-beg+1)
-                    res = s.substr(beg,end-beg+1);
-                if(myMap.find(s[beg])!=myMap.end()&&temp[s[beg]]==myMap[s[beg]])
-                    num--;
+                res = s.substr(beg,end-beg+1);
                 beg++;
-            }else end++;
+            }
+            end++;
         }return res;
     }  
-  
